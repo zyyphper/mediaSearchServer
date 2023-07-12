@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix'=>'api'],function () use ($router) {
+    $router->get('read',[\App\Http\Controllers\Text\FileController::class,'Read']);
+    $router->group(['namespace'=>'Test'],function () use ($router) {
+//        $router->get('read','FileController@Read');
+    });
+});
