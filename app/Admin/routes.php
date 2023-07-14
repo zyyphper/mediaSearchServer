@@ -28,7 +28,10 @@ Route::group([
 //            $router->get('all_export', 'SourceController@allExport');
 //        });
         // 媒资
-        $router->resource('source', 'SourceController');
+        $router->group(['prefix' => 'file','namespace' => 'File'], function () use ($router) {
+            $router->resource('templates', 'FileTemplatesController');
+        });
+
 //        // 节目集
 //        $router->resource('album', 'AlbumController');
 //        // 标签
