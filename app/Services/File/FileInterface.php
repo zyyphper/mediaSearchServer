@@ -8,6 +8,8 @@ interface FileInterface
 {
     public function create() :object;
 
-    public function read($filePath) :array;
+    public function changeToHtml($filePath) :array;
+
+    public function dataFilling($tplFilePath,$data) :void;
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Controllers\Material;
+namespace App\Admin\Controllers\Material\File;
 
 use App\Admin\Extensions\Tools\SourceExportTool;
 use App\Helpers\Tools;
@@ -11,7 +11,7 @@ use App\Models\Material\Copyright;
 use App\Models\Material\Enums\FileType;
 use App\Models\Material\Enums\ImageType;
 use App\Models\Material\Enums\SourceType;
-use App\Models\Material\MediaSources;
+use App\Models\Material\FileTemplates;
 use App\Models\Material\Source;
 use App\Services\Excel\ExcelService;
 use App\Services\Excel\Exports\Tpl\SourceExportTpl;
@@ -23,7 +23,7 @@ use Encore\Admin\Layout\Content;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class SourceController extends BaseAdminController
+class FileTemplatesController extends BaseAdminController
 {
 
     /**
@@ -31,10 +31,13 @@ class SourceController extends BaseAdminController
      *
      * @var string
      */
-    protected $title = '素材';
+    protected $title = '模板';
 
-    public function __construct()
+    protected $model;
+
+    public function __construct(FileTemplates $model)
     {
+        $this->model = $model;
     }
     /**
      * 表格
@@ -43,7 +46,7 @@ class SourceController extends BaseAdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new MediaSources());
+        $grid = new Grid($this->model);
         $grid->model()->latest();
 
 //        $grid->tools(function ($tools) use ($grid) {
@@ -52,10 +55,10 @@ class SourceController extends BaseAdminController
         $grid->disableCreateButton();
         $grid->disableExport();
 
-//        $grid->column('id', 'ID');
-//        $grid->column('encode_code', '媒资编码')->editable();
-        $grid->column('name', '媒资名称')->editable();
-        $grid->column('type','类型')->using(FileType::$texts);
+        $grid->column('id', '模板ID');
+        $grid->platform()->name("平台");
+        $grid->column('name', '模板名称')->editable();
+        $grid->column('type','文件类型')->using(FileType::$texts);
 
 //        $status = [
 //            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],

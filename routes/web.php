@@ -18,8 +18,6 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix'=>'api'],function () use ($router) {
-    $router->get('read',[\App\Http\Controllers\Text\FileController::class,'Read']);
-    $router->group(['namespace'=>'Test'],function () use ($router) {
-//        $router->get('read','FileController@Read');
-    });
+    $router->get('changeToHtml',[\App\Http\Controllers\Text\FileController::class,'changeToHtml']);
+    $router->get('dataFilling',[\App\Http\Controllers\Text\FileController::class,'dataFilling']);
 });

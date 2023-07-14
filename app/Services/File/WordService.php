@@ -7,6 +7,7 @@ namespace App\Services\File;
 use App\Libraries\Base\BaseService;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
 use TheSeer\Tokenizer\Exception;
 
 class WordService extends BaseService implements FileInterface
@@ -18,12 +19,12 @@ class WordService extends BaseService implements FileInterface
         return $phpWord;
     }
 
-    public function read($filePath): array
+    public function changeToHtml($filePath): array
     {
         try {
             $phpWord = IOFactory::load($filePath);
             $xmlWriter = IOFactory::createWriter($phpWord,"HTML");
-            $xmlWriter->save("/source/1.html");
+            $xmlWriter->save(public_path("/sources/1/default.html"));
             return [
                 'code' => 0,
                 'msg' => '读取成功',
@@ -36,5 +37,12 @@ class WordService extends BaseService implements FileInterface
                 'data' => []
             ];
         }
+    }
+
+    public function dataFilling($tplFilePath, $data): void
+    {
+        $tplProcessor = new TemplateProcessor($tplFilePath);
+        $tplProcessor->setValues($data);
+        $tplProcessor->saveAs(public_path("/sources/1/".time().".docx"));
     }
 }
