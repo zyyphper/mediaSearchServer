@@ -29,7 +29,7 @@ Route::group([
 //        });
         // 媒资
         $router->group(['prefix' => 'file','namespace' => 'File'], function () use ($router) {
-            $router->resource('templates', 'FileTemplatesController');
+            $router->resource('templates', 'TemplatesController');
         });
 
 //        // 节目集
