@@ -46,8 +46,7 @@ class PlatformController extends BaseAdminController
 
         $grid->column('id', 'ID');
         $grid->column('name', '平台名称')->editable();
-
-
+        $grid->vipLevel()->name("等级");
         $status = [
             'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
             'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
