@@ -6,7 +6,9 @@ namespace App\Admin\Controllers\Admin;
 
 use App\Libraries\Base\BaseAdminController;
 use App\Models\Admin\Platform;
+use App\Models\Vip\VipLevel;
 use Encore\Admin\Grid;
+use Encore\Admin\Form;
 
 class PlatformController extends BaseAdminController
 {
@@ -60,5 +62,24 @@ class PlatformController extends BaseAdminController
         return $grid;
     }
 
+    /**
+     *
+     */
+    protected function form()
+    {
+        $form = new Form($this->model);
+        $form->text('name', '平台名称');
+        $status = [
+            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
+            'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
+        ];
+        $form->switch('status','状态')->states($status);
+        $form->saving(function (Form $form) {
+            $form->model()->id = app('snowFlake')->id;
+            $form->model()->vip_level = VipLevel::$defaultLevel;
+        });
+
+        return $form;
+    }
 
 }

@@ -41,6 +41,9 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->singleton('snowFlake',function () {
+    return \App\Services\Common\SnowFlakeService::load();
+});
 /*
 |--------------------------------------------------------------------------
 | Return The Application
