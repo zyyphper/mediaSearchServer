@@ -14,7 +14,7 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
 
     $router->group(['prefix' => 'admin','namespace' => 'Admin'], function () use ($router) {
-        $router->resource('auth/users', 'PlatformUserController')->names('admin.auth.users');
+        $router->resource('auth/platform_users', 'PlatformUserController');
     });
 
     // 媒资信息模块
