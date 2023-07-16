@@ -14,6 +14,7 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
 
     $router->group(['prefix' => 'admin','namespace' => 'Admin'], function () use ($router) {
+        $router->resource('platforms', 'PlatformController');
         $router->resource('platform_users', 'PlatformUserController');
     });
 
