@@ -23,7 +23,7 @@ use Encore\Admin\Layout\Content;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class TemplatesController extends BaseAdminController
+class TemplateController extends BaseAdminController
 {
 
     /**
