@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FileTemplates extends BaseModel
 {
-    use SoftDeletes;
 
     protected $connection = "business";
 
