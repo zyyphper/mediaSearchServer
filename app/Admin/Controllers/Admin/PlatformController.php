@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Admin\Controllers\System;
+namespace App\Admin\Controllers\Admin;
 
 
 use App\Libraries\Base\BaseAdminController;
-use App\Models\System\Platform;
+use App\Models\Admin\Platform;
 use Encore\Admin\Grid;
 
 class PlatformController extends BaseAdminController

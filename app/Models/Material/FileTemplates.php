@@ -5,8 +5,7 @@ namespace App\Models\Material;
 
 
 use App\Libraries\Base\BaseModel;
-use App\Models\System\Platform;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Admin\Platform;
 
 class FileTemplates extends BaseModel
 {

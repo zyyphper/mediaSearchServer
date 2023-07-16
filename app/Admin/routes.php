@@ -13,6 +13,10 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
 
+    $router->group(['prefix' => 'admin','namespace' => 'Admin'], function () use ($router) {
+        $router->resource('auth/users', 'UserController')->names('admin.auth.users');
+    });
+
     // 媒资信息模块
     $router->group(['prefix' => 'material','namespace' => 'Material'], function () use ($router) {
 //        $router->group(['prefix' => 'source'] ,function ($router) {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models\System;
+namespace App\Models\Admin;
 
 
 use App\Libraries\Base\BaseModel;
