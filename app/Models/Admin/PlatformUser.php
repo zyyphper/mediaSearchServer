@@ -7,7 +7,7 @@ use Encore\Admin\Auth\Database\Administrator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
-class PlatformUsers extends Administrator
+class PlatformUser extends Administrator
 {
     protected $fillable = ['platform_id','username', 'password', 'name', 'avatar'];
 

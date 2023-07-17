@@ -2,26 +2,11 @@
 
 namespace App\Admin\Controllers\Material\File;
 
-use App\Admin\Extensions\Tools\SourceExportTool;
-use App\Helpers\Tools;
+
 use App\Libraries\Base\BaseAdminController;
-use App\Models\Base\Project;
-use App\Models\Material\Album;
-use App\Models\Material\Copyright;
 use App\Models\Material\Enums\FileType;
-use App\Models\Material\Enums\ImageType;
-use App\Models\Material\Enums\SourceType;
-use App\Models\Material\FileTemplates;
-use App\Models\Material\Source;
-use App\Services\Excel\ExcelService;
-use App\Services\Excel\Exports\Tpl\SourceExportTpl;
-use App\Services\Material\SourceService;
-use Encore\Admin\Widgets\Table;
-use Encore\Admin\Form;
+use App\Models\Material\FileTemplate;
 use Encore\Admin\Grid;
-use Encore\Admin\Layout\Content;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class TemplateController extends BaseAdminController
 {
@@ -35,7 +20,7 @@ class TemplateController extends BaseAdminController
 
     protected $model;
 
-    public function __construct(FileTemplates $model)
+    public function __construct(FileTemplate $model)
     {
         $this->model = $model;
     }

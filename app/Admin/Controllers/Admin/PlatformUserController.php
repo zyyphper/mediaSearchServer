@@ -5,7 +5,6 @@ namespace App\Admin\Controllers\Admin;
 
 use App\Libraries\Base\Platform;
 use \Encore\Admin\Controllers\UserController;
-use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;

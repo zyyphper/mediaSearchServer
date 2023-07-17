@@ -180,11 +180,11 @@ return [
 
         // User tables and model.
         'users_table' => 'admin_users',
-        'users_model' => \App\Models\Admin\PlatformUsers::class,
+        'users_model' => \App\Models\Admin\PlatformUser::class,
 
         // Role table and model.
         'roles_table' => 'admin_roles',
-        'roles_model' => Encore\Admin\Auth\Database\Role::class,
+        'roles_model' => \App\Models\Admin\PlatformRole::class,
 
         // Permission table and model.
         'permissions_table' => 'admin_permissions',
