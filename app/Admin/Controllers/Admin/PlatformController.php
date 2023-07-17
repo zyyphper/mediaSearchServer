@@ -12,6 +12,8 @@ use Encore\Admin\Form;
 
 class PlatformController extends BaseAdminController
 {
+    use \App\Libraries\Base\Platform;
+
     /**
      * Title for current resource.
      *
@@ -42,7 +44,8 @@ class PlatformController extends BaseAdminController
     {
         $grid = new Grid($this->model);
         $grid->model()->latest();
-
+        //平台授权
+        $this->platformAuth($grid);
 
         $grid->column('id', 'ID');
         $grid->column('name', '平台名称')->editable();
