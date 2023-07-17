@@ -16,6 +16,8 @@ Route::group([
     $router->group(['prefix' => 'auth','namespace' => 'Admin'], function () use ($router) {
         $router->resource('platforms', 'PlatformController');
         $router->resource('users', 'PlatformUserController');
+        $router->resource('roles', 'PlatformRoleController');
+        $router->resource('logs', 'PlatformLogController');
     });
 
     // 媒资信息模块

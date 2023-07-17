@@ -28,7 +28,6 @@ class PlatformUserController extends UserController
         $this->platformAuth($grid);
         //列表
         $grid->column('id', 'ID')->sortable();
-        $grid->platform()->name("平台");
         $grid->column('username', trans('admin.username'));
         $grid->column('name', trans('admin.name'));
         $grid->column('roles', trans('admin.roles'))->pluck('name')->label();
