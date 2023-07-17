@@ -94,7 +94,7 @@ class PlatformUserController extends UserController
         $connection = config('admin.database.connection');
 
         $form->display('id', 'ID');
-        $form->select('platform',trans('admin.platform'))->options($platformModel::all()->pluck('name','id'));
+        $form->select('platform_id',trans('admin.platform'))->options($platformModel::all()->pluck('name','id'));
         $form->text('username', trans('admin.username'))
             ->creationRules(['required', "unique:{$connection}.{$userTable}"])
             ->updateRules(['required', "unique:{$connection}.{$userTable},username,{{id}}"]);
