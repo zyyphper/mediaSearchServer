@@ -175,6 +175,9 @@ return [
         // Database connection for following tables.
         'connection' => '',
 
+        'platforms_table' => 'admin_platforms',
+        'platforms_model' => \App\Models\Admin\Platform::class,
+
         // User tables and model.
         'users_table' => 'admin_users',
         'users_model' => \App\Models\Admin\PlatformUsers::class,
