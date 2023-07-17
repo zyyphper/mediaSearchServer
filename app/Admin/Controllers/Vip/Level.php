@@ -1,26 +1,25 @@
 <?php
 
 
-namespace App\Admin\Controllers\Admin;
+namespace App\Admin\Controllers\Vip;
 
 
 use App\Libraries\Base\BaseAdminController;
-use App\Models\Admin\Platform;
 use App\Models\Vip\VipLevel;
-use Encore\Admin\Grid;
 use Encore\Admin\Form;
+use Encore\Admin\Grid;
 
-class PlatformController extends BaseAdminController
+class Level extends BaseAdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '平台';
+    protected $title = '会员等级';
 
     /**
-     * @var Platform
+     * @var VipLevel
      */
     protected $model;
 
@@ -29,7 +28,7 @@ class PlatformController extends BaseAdminController
      */
     protected $service;
 
-    public function __construct(Platform $model)
+    public function __construct(VipLevel $model)
     {
         $this->model = $model;
     }
@@ -44,14 +43,11 @@ class PlatformController extends BaseAdminController
         $grid->model()->latest();
 
 
-        $grid->column('id', 'ID');
-        $grid->column('name', '平台名称')->editable();
-        $grid->vipLevel()->name("等级");
-        $status = [
-            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
-            'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
-        ];
-        $grid->column('status', '状态')->switch($status);
+        $grid->column('level', 'LEVEL');
+        $grid->column('name', '会员等级')->editable();
+        $grid->column('requirement_score','等级达标分数');
+        $grid->column('space_capacity','空间容量');
+        $grid->column('type_change_times','类型转换次数');
         $grid->column('created_at', '创建时间');
 
 

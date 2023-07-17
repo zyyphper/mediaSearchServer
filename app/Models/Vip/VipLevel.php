@@ -9,6 +9,7 @@ use App\Libraries\Base\BaseModel;
 class VipLevel extends BaseModel
 {
     protected $primaryKey = "level";
+    protected $connection = "member";
 
     public static $defaultLevel = 0;
 
