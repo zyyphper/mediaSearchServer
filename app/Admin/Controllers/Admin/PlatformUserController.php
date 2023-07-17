@@ -3,7 +3,9 @@
 
 namespace App\Admin\Controllers\Admin;
 
+use App\Libraries\Base\Platform;
 use \Encore\Admin\Controllers\UserController;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
@@ -11,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 
 class PlatformUserController extends UserController
 {
+    use Platform;
+
     /**
      * Make a grid builder.
      *
@@ -21,7 +25,9 @@ class PlatformUserController extends UserController
         $userModel = config('admin.database.users_model');
 
         $grid = new Grid(new $userModel());
-
+        //平台授权
+        $this->platformAuth($grid);
+        //列表
         $grid->column('id', 'ID')->sortable();
         $grid->platform()->name("平台");
         $grid->column('username', trans('admin.username'));
