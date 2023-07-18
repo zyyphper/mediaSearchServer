@@ -22,11 +22,7 @@ class PlatformMenuController extends MenuController
 
         $tree = new Tree(new $menuModel());
         $tree->query(function ($model) {
-            return $model->where('is_admin',isAdmin::YES)
-                ->orWhere(function ($query) {
-                    $query->where('is_admin',isAdmin::NO)->where('platform_id',Admin::user()->platform_id);
-                })
-                ->get();
+            return $model->where('platform_id',Admin::user()->platform_id);
         });
 
         $tree->disableCreate();
