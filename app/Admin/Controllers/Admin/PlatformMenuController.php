@@ -8,10 +8,52 @@ use App\Models\Admin\Enum\isAdmin;
 use Encore\Admin\Controllers\MenuController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
+use Encore\Admin\Layout\Column;
+use Encore\Admin\Layout\Content;
+use Encore\Admin\Layout\Row;
 use Encore\Admin\Tree;
+use Encore\Admin\Widgets\Box;
 
 class PlatformMenuController extends MenuController
 {
+
+    /**
+     * Index interface.
+     *
+     * @param Content $content
+     *
+     * @return Content
+     */
+    public function index(Content $content)
+    {
+        return $content
+            ->title(trans('admin.menu'))
+            ->description(trans('admin.list'))
+            ->row(function (Row $row) {
+                $row->column(6, $this->treeView()->render());
+
+                $row->column(6, function (Column $column) {
+                    $form = new \Encore\Admin\Widgets\Form();
+                    $form->action(admin_url('auth/menu'));
+
+                    $menuModel = config('admin.database.menu_model');
+                    $permissionModel = config('admin.database.permissions_model');
+                    $roleModel = config('admin.database.roles_model');
+
+                    $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
+                    $form->text('title', trans('admin.title'))->rules('required');
+                    $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
+                    $form->text('uri', trans('admin.uri'));
+                    $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
+                    if ((new $menuModel())->withPermission()) {
+                        $form->select('permission', trans('admin.permission'))->options($permissionModel::pluck('name', 'slug'));
+                    }
+                    $form->hidden('_token')->default(csrf_token());
+
+                    $column->append((new Box(trans('admin.new'), $form))->style('success'));
+                });
+            });
+    }
 
     /**
      * @return \Encore\Admin\Tree
@@ -26,7 +68,6 @@ class PlatformMenuController extends MenuController
         });
 
         $tree->disableCreate();
-        var_dump($tree);
 
         $tree->branch(function ($branch) {
             $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
