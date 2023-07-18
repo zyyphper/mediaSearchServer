@@ -66,26 +66,26 @@ class PlatformMenuController extends MenuController
         $tree = new Tree(new PlatformMenu());
         $tree->disableCreate();
 
-        var_dump(Admin::user()->platform_id);
-        $tree->query(function ($model) {
-            return $model->where('platform_id',Admin::user()->platform_id);
-        });
-
-//        $tree->branch(function ($branch) {
-//            $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
-//
-//            if (!isset($branch['children'])) {
-//                if (url()->isValidUrl($branch['uri'])) {
-//                    $uri = $branch['uri'];
-//                } else {
-//                    $uri = admin_url($branch['uri']);
-//                }
-//
-//                $payload .= "&nbsp;&nbsp;&nbsp;<a href=\"$uri\" class=\"dd-nodrag\">$uri</a>";
-//            }
-//
-//            return $payload;
+//        var_dump(Admin::user()->platform_id);
+//        $tree->query(function ($model) {
+//            return $model->where('platform_id',Admin::user()->platform_id);
 //        });
+
+        $tree->branch(function ($branch) {
+            $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
+
+            if (!isset($branch['children'])) {
+                if (url()->isValidUrl($branch['uri'])) {
+                    $uri = $branch['uri'];
+                } else {
+                    $uri = admin_url($branch['uri']);
+                }
+
+                $payload .= "&nbsp;&nbsp;&nbsp;<a href=\"$uri\" class=\"dd-nodrag\">$uri</a>";
+            }
+
+            return $payload;
+        });
 
         return $tree;
     }

@@ -4,6 +4,7 @@
 namespace App\Models\Admin;
 
 
+use App\Models\Admin\Enum\IsAdmin;
 use Encore\Admin\Auth\Database\Menu;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class PlatformMenu extends Menu
 {
-    protected $fillable = ['platform_id','parent_id', 'order', 'title', 'icon', 'uri', 'permission'];
+    protected $fillable = ['platform_id','parent_id', 'order', 'title', 'icon', 'uri', 'permission','is_admin'];
 
     /**
      * @return BelongsTo
@@ -37,7 +38,13 @@ class PlatformMenu extends Menu
         if (config('admin.check_menu_roles') !== false) {
             $query->with('roles');
         }
+        if (Admin::user()->platform_id === 0) {
+            return $query->where('platform_id',Admin::user()->platform_id)->selectRaw('*, '.$orderColumn.' ROOT')->orderByRaw($byOrder)->get()->toArray();
+        }
 
-        return $query->where('platform_id',Admin::user()->platform_id)->selectRaw('*, '.$orderColumn.' ROOT')->orderByRaw($byOrder)->get()->toArray();
+        return $query->where('platform_id',Admin::user()->platform_id)->orWhere('is_admin',IsAdmin::YES)
+            ->selectRaw('*, '.$orderColumn.' ROOT')
+            ->orderByRaw($byOrder)
+            ->get()->toArray();
     }
 }
