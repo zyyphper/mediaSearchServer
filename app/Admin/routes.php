@@ -17,6 +17,7 @@ Route::group([
         $router->resource('platforms', 'PlatformController');
         $router->resource('users', 'PlatformUserController');
         $router->resource('roles', 'PlatformRoleController');
+        $router->resource('menu', 'PlatformMenuController');
         $router->resource('logs', 'PlatformLogController');
     });
 
