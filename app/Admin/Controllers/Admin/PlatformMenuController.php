@@ -63,7 +63,7 @@ class PlatformMenuController extends MenuController
     {
         $menuModel = config('admin.database.menu_model');
 
-        $tree = new Tree(new PlatformMenu());
+        $tree = new Tree($menuModel);
         $tree->disableCreate();
 
 //        var_dump(Admin::user()->platform_id);
