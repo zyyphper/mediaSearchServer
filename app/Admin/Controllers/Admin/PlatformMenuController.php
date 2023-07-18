@@ -20,14 +20,14 @@ class PlatformMenuController extends MenuController
     {
         $menuModel = config('admin.database.menu_model');
 
-        $tree = new Tree(
-            (new $menuModel())
-            ->where('is_admin',isAdmin::YES)
-            ->orWhere(function ($query) {
-                $query->where('is_admin',isAdmin::NO)->where('platform_id',Admin::user()->platform_id);
-            })
-            ->get()
-        );
+        $tree = new Tree(new $menuModel());
+        $tree->query(function ($model) {
+            return $model->where('is_admin',isAdmin::YES)
+                ->orWhere(function ($query) {
+                    $query->where('is_admin',isAdmin::NO)->where('platform_id',Admin::user()->platform_id);
+                })
+                ->get();
+        });
 
         $tree->disableCreate();
 
