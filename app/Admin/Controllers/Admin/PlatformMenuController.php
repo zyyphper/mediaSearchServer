@@ -26,6 +26,7 @@ class PlatformMenuController extends MenuController
         });
 
         $tree->disableCreate();
+        var_dump($tree);
 
         $tree->branch(function ($branch) {
             $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
