@@ -5,6 +5,7 @@ namespace App\Admin\Controllers\Admin;
 
 
 use App\Models\Admin\Enum\isAdmin;
+use App\Models\Admin\PlatformMenu;
 use Encore\Admin\Controllers\MenuController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -62,9 +63,10 @@ class PlatformMenuController extends MenuController
     {
         $menuModel = config('admin.database.menu_model');
 
-        $tree = new Tree(new $menuModel());
+        $tree = new Tree(new PlatformMenu());
         $tree->disableCreate();
 
+        var_dump(Admin::user()->platform_id);
         $tree->query(function ($model) {
             return $model->where('platform_id',Admin::user()->platform_id);
         });
