@@ -63,8 +63,11 @@ class PlatformMenuController extends MenuController
         $menuModel = config('admin.database.menu_model');
 
         $tree = new Tree(new $menuModel());
-
         $tree->disableCreate();
+
+        $tree->query(function ($model) {
+            return $model->where('platform_id',Admin::user()->platform_id);
+        });
 
         $tree->branch(function ($branch) {
             $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
@@ -80,10 +83,6 @@ class PlatformMenuController extends MenuController
             }
 
             return $payload;
-        });
-
-        $tree->query(function ($model) {
-            return $model->where('platform_id',Admin::user()->platform_id);
         });
 
         return $tree;
