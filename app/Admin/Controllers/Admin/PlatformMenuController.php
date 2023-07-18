@@ -26,6 +26,7 @@ class PlatformMenuController extends MenuController
             ->orWhere(function ($query) {
                 $query->where('is_admin',isAdmin::NO)->where('platform_id',Admin::user()->platform_id);
             })
+            ->get()
         );
 
         $tree->disableCreate();
