@@ -24,6 +24,9 @@ class PlatformRole extends Role
 
     public static function getPlatformRole($platformId)
     {
+        if ($platformId === 0) {
+            return self::all()->pluck('name','id');
+        }
         return self::where('platform_id',$platformId)->pluck('name', 'id');
     }
 }
