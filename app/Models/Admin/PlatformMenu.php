@@ -42,8 +42,9 @@ class PlatformMenu extends Menu
             return $query->where('platform_id',Admin::user()->platform_id)->selectRaw('*, '.$orderColumn.' ROOT')->orderByRaw($byOrder)->get()->toArray();
         }
 
-        return $query->where('platform_id',Admin::user()->platform_id)->orWhere('is_admin',IsAdmin::YES)
-            ->selectRaw('*, '.$orderColumn.' ROOT')
+        return $query->where(function ($query) {
+                $query->where('platform_id',Admin::user()->platform_id)->orWhere('is_admin',IsAdmin::YES);
+            })->selectRaw('*, '.$orderColumn.' ROOT')
             ->orderByRaw($byOrder)
             ->get()->toArray();
     }
