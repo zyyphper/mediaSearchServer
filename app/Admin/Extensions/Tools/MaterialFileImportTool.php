@@ -6,6 +6,7 @@ use App\Libraries\Base\Platform;
 use App\Models\Admin\Platform as PlatformModel;
 use App\Models\Material\FileGroup;
 use Encore\Admin\Actions\Action;
+use Illuminate\Http\Request;
 
 class MaterialFileImportTool extends Action
 {
@@ -13,6 +14,13 @@ class MaterialFileImportTool extends Action
     public $name = '导入媒资数据';
 
     protected $selector = '.import-post';
+
+    public function handle(Request $request)
+    {
+        $request->file('file');
+
+        return $this->response()->success('导入完成！')->refresh();
+    }
 
     public function form()
     {
@@ -24,6 +32,7 @@ class MaterialFileImportTool extends Action
         $this->multipleSelect('group_id', '分组')->options(function () {
             return FileGroup::pluck('name', 'id');
         })->required();
+        $this->file('file', '请选择文件');
     }
 
     public function render()
