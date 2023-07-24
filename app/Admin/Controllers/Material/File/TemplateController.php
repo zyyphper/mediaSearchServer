@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers\Material\File;
 
 
-use App\Admin\Extensions\Tools\MaterialFileImportTool;
+use App\Admin\Actions\MaterialImport;
 use App\Helpers\Tools;
 use App\Libraries\Base\BaseAdminController;
 use App\Models\Material\Enums\FileType;
@@ -38,7 +38,7 @@ class TemplateController extends BaseAdminController
         $grid->model()->latest();
 
         $grid->tools(function ($tools) use ($grid) {
-            $tools->append(new MaterialFileImportTool());
+            $tools->append(new MaterialImport());
         });
         $grid->disableCreateButton();
 

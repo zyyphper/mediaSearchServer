@@ -8,7 +8,10 @@ namespace App\Libraries\Base;
 
 abstract class BaseEnum
 {
-    public static array $texts = [];
+    /**
+     * @var array
+     */
+    public static $texts = [];
 
     public static function getName($value, bool $toLower = false): ?string
     {

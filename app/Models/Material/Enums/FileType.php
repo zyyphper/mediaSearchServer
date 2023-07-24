@@ -12,7 +12,7 @@ class FileType extends BaseEnum
     const PDF = 2;
     const EXCEL = 3;
 
-    public static array $texts = [
+    public static $texts = [
         self::WORD => 'word',
         self::PDF => 'pdf',
         self::EXCEL => 'excel'
