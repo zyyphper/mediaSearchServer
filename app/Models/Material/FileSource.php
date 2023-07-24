@@ -34,7 +34,7 @@ class FileSource extends BaseModel
 
     public function groups()
     {
-        return $this->belongsToMany(FileGroup::class,FileGroupSource::class,'group_id','source_id');
+        return $this->morphMany(FileGroup::class,"groupable");
     }
 
     public function template()

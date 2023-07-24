@@ -25,8 +25,12 @@ class FileGroup extends BaseModel
 
     public function templates()
     {
-        return $this->belongsToMany(FileTemplate::class,FileGroupTemplate::class,'template_id','group_id');
+        return $this->morphedByMany(FileTemplate::class,"groupable");
     }
 
+    public function sources()
+    {
+        return $this->morphedByMany(FileSource::class,"groupable");
+    }
 
 }

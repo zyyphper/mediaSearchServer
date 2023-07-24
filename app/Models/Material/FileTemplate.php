@@ -33,7 +33,7 @@ class FileTemplate extends BaseModel
 
     public function groups()
     {
-        return $this->belongsToMany(FileGroup::class,FileGroupTemplate::class,'group_id','template_id');
+        return $this->morphMany(FileGroup::class,"groupable");
     }
 
     public function sources()
