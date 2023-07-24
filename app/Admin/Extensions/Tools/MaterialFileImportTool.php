@@ -6,6 +6,7 @@ use App\Libraries\Base\Platform;
 use App\Models\Admin\Platform as PlatformModel;
 use App\Models\Material\FileGroup;
 use Encore\Admin\Actions\Action;
+use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 
 class MaterialFileImportTool extends Action
@@ -17,6 +18,10 @@ class MaterialFileImportTool extends Action
 
     public function handle(Request $request)
     {
+        $platformId = $request->get("platform_id") ?? Admin::user()->platform_id;
+        $groupIds = $request->get("group_ids");
+        var_dump($platformId);
+        var_dump($groupIds);
         $request->file('file');
 
         return $this->response()->success('导入完成！')->refresh();
@@ -29,7 +34,7 @@ class MaterialFileImportTool extends Action
                 return PlatformModel::pluck('name', 'id');
             })->required();
         }
-        $this->multipleSelect('group_id', '分组')->options(function () {
+        $this->multipleSelect('group_ids', '分组')->options(function () {
             return FileGroup::pluck('name', 'id');
         })->required();
         $this->file('file', '请选择文件');
