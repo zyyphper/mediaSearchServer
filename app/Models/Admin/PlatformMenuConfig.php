@@ -5,12 +5,14 @@ namespace App\Models\Admin;
 
 
 use App\Libraries\Base\BaseModel;
+use App\Traits\HasCompositePrimaryKey;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PlatformMenuConfig extends BaseModel
 {
+    use HasCompositePrimaryKey;
     protected $table = "admin_menu_configs";
-    protected $primaryKey = "menu_id";
+    protected $primaryKey = ["menu_id","platform_id"];
     protected $fillable = ['menu_id','platform_id','status'];
 
 
