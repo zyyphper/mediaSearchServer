@@ -41,6 +41,17 @@ class PlatformMenuController extends MenuController
                     $permissionModel = config('admin.database.permissions_model');
                     $roleModel = config('admin.database.roles_model');
 
+                    $status = [
+                        'on' => ['value'=>1,'text'=>'启用','color'=>'primary'],
+                        'off' => ['value'=>0,'text'=>'禁用','color'=>'default']
+                    ];
+
+                    if ($this->isRootPlatform()) {
+                        $form->hasMany('platformConfigs','平台配置',function (Form $form) use($status){
+                            $form->select('platform_id','平台')->options(PlatformModel::all()->pluck('name','id'));
+                            $form->switch('status','状态')->states($status)->default();
+                        });
+                    }
                     $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
                     $form->text('title', trans('admin.title'))->rules('required');
                     $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
@@ -96,8 +107,8 @@ class PlatformMenuController extends MenuController
         $permissionModel = config('admin.database.permissions_model');
         $roleModel = config('admin.database.roles_model');
         $status = [
-            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
-            'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
+            'on' => ['value'=>1,'text'=>'启用','color'=>'primary'],
+            'off' => ['value'=>0,'text'=>'禁用','color'=>'default']
         ];
 
         $form = new Form(new $menuModel());

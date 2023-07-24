@@ -51,8 +51,8 @@ class TemplateController extends BaseAdminController
         $grid->column('type','文件类型')->using(FileType::$texts);
 
         $status = [
-            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
-            'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
+            'on' => ['value'=>1,'text'=>'启用','color'=>'primary'],
+            'off' => ['value'=>0,'text'=>'禁用','color'=>'default']
         ];
         $grid->column('status', '状态')->switch($status);
 //        $grid->column('label','媒资标签')->display(function ($labels) {

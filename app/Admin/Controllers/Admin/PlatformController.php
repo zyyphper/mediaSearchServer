@@ -49,8 +49,8 @@ class PlatformController extends BaseAdminController
         $grid->column('name', '平台名称')->editable();
         $grid->vipLevel()->name("等级");
         $status = [
-            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
-            'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
+            'on' => ['value'=>1,'text'=>'启用','color'=>'primary'],
+            'off' => ['value'=>0,'text'=>'禁用','color'=>'default']
         ];
         $grid->column('status', '状态')->switch($status);
         $grid->column('created_at', '创建时间');
@@ -70,8 +70,8 @@ class PlatformController extends BaseAdminController
         $form = new Form($this->model);
         $form->text('name', '平台名称');
         $status = [
-            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
-            'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
+            'on' => ['value'=>1,'text'=>'启用','color'=>'primary'],
+            'off' => ['value'=>0,'text'=>'禁用','color'=>'default']
         ];
         $form->switch('status','状态')->states($status);
         $form->saving(function (Form $form) {

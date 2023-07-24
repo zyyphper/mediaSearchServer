@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PlatformMenuConfig extends BaseModel
 {
+    protected $table = "admin_menu_configs";
     protected $fillable = ['menu_id','platform_id','status'];
+
 
     /**
      * @return BelongsTo
