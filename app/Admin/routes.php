@@ -25,13 +25,18 @@ Route::group([
     $router->group(['prefix' => 'material','namespace' => 'Material'], function () use ($router) {
         //文件
         $router->group(['prefix' => 'file','namespace' => 'File'], function () use ($router) {
+            //模板
+            $router->resource('templates', 'TemplateController');
+            //分组
+            $router->resource('groups', 'GroupController');
+            //资源
+            $router->resource('sources','SourceController');
             $router->group(['prefix' => 'template','namespace' => 'Template'],function() use ($router) {
                 // 模板导入
                 $router->post('import', 'TemplateController@import')->name('material_files_import');
-                //资源
-                $router->resource('/', 'TemplateController');
+
             });
-            $router->resource('groups', 'GroupController');
+
         });
     });
 
