@@ -18,4 +18,9 @@ trait Platform
         }
         $grid->model()->where('platform_id',$platformId);
     }
+
+    public function isRootPlatform()
+    {
+        return Admin::user()->platform_id === 0;
+    }
 }

@@ -5,10 +5,30 @@
 
 namespace App\Libraries\Base;
 
-use Illuminate\Database\Eloquent\Model;
 
-class BaseService extends Model
+use App\Services\Rpc\Method\Rpc;
+use App\Services\Rpc\Method\RpcInterface;
+use function PHPUnit\Framework\isNull;
+
+
+class BaseService
 {
+    /**
+     * 服务名
+     * @var string
+     */
+    public static $serviceName = null;
+    /**
+     * 远程调用服务对象
+     * @var self
+     */
+    protected $rpcClient = null;
+
+    /**
+     * 通信方式 默认内置服务
+     * @var int
+     */
+    protected $commMethod = null;
 
     /**
      * 模型对象
@@ -22,8 +42,12 @@ class BaseService extends Model
      */
     protected $modelName = null;
 
-    public function __construct()
+    public function __construct(RpcInterface $rpcClient = null,$rpcConfig = [])
     {
+        //远程调用服务初始化
+        if (!isNull($rpcClient)) {
+            $this->rpcClient = $rpcClient;
+        }
         // 自动加载模型
         $this->autoSetModel();
         // 自动初始化函数调用
@@ -85,4 +109,19 @@ class BaseService extends Model
         return explode('\\', $classPath);
     }
 
+    /**
+     * 通过服务名和通信方式调用服务方法
+     * @param $name
+     * @param $arguments
+     * @throws \Exception
+     */
+    public function __call($name, $arguments)
+    {
+        //判断当前服务是否已经连接
+        if (!isNull($this->rpcClient)) {
+            return $this->rpcClient->call($name,$arguments[0]);
+        }
+        //非远程服务 报错弹出
+        throw new \Exception("not exist function");
+    }
 }

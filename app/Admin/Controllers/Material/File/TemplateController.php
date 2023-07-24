@@ -3,10 +3,14 @@
 namespace App\Admin\Controllers\Material\File;
 
 
+use App\Admin\Extensions\Tools\MaterialExportTool;
+use App\Helpers\Tools;
 use App\Libraries\Base\BaseAdminController;
 use App\Models\Material\Enums\FileType;
 use App\Models\Material\FileTemplate;
+use App\Services\Excel\Exports\Tpl\SourceExportTpl;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 
 class TemplateController extends BaseAdminController
 {
@@ -23,6 +27,7 @@ class TemplateController extends BaseAdminController
     public function __construct(FileTemplate $model)
     {
         $this->model = $model;
+        parent::__construct();
     }
     /**
      * 表格
@@ -34,22 +39,24 @@ class TemplateController extends BaseAdminController
         $grid = new Grid($this->model);
         $grid->model()->latest();
 
-//        $grid->tools(function ($tools) use ($grid) {
-//            $tools->append(new SourceExportTool());
-//        });
+        $grid->tools(function ($tools) use ($grid) {
+            $tools->append(new MaterialExportTool());
+        });
         $grid->disableCreateButton();
-        $grid->disableExport();
 
         $grid->column('id', '模板ID');
-        $grid->platform()->name("平台");
+        if ($this->isRootPlatform()) {
+            $grid->platform()->name("平台");
+        }
+        $grid->groups()->name("分组集合");
         $grid->column('name', '模板名称')->editable();
         $grid->column('type','文件类型')->using(FileType::$texts);
 
-//        $status = [
-//            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
-//            'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
-//        ];
-//        $grid->column('status', '状态')->switch($status);
+        $status = [
+            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
+            'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
+        ];
+        $grid->column('status', '状态')->switch($status);
 //        $grid->column('label','媒资标签')->display(function ($labels) {
 //            $str = "";
 //            $labels = explode(',',$labels);
@@ -63,7 +70,7 @@ class TemplateController extends BaseAdminController
 //            return $str;
 //        });
         $grid->column('created_at', '创建时间');
-//        $grid->operateUser()->name('操作员');
+        $grid->operator()->name('操作员');
 
 //        $grid->filter(function ($filter) {
 //            $filter->disableIdFilter();
@@ -90,5 +97,38 @@ class TemplateController extends BaseAdminController
         return $grid;
     }
 
+    /**
+     * 数据导入页面 + 数据导入检查
+     * @param Content $content
+     * @return Content|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function importPage(Content $content)
+    {
+        if ('GET' == request()->method()) {
+
+        } else {
+            // 验证文件
+            $data = Tools::checkRequest('file');
+            $groupIds = request('group_ids');
+
+            // 验证数据量
+            if ($data['file']->getSize() > 819200)
+                return response(Tools::error('文件大小不能大于800KB'));
+
+            return response(Tools::setData($checkData));
+        }
+    }
+
+    /**
+     * 数据导入
+     * @return mixed
+     */
+    public function import()
+    {
+        $data = Tools::checkRequest('import_data');
+        $importData = json_decode($data['import_data'], JSON_UNESCAPED_UNICODE);
+        $this->service->importData($importData);
+        return $this->ajaxSuccess('导入成功');
+    }
 
 }

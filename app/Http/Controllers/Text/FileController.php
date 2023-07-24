@@ -4,15 +4,15 @@
 namespace App\Http\Controllers\Text;
 
 
+use App\Services\File\PdfService;
 use App\Services\File\WordService;
 use Illuminate\Routing\Controller as BaseController;
 
 class FileController extends BaseController
 {
-    public function changeToHtml()
+    public function changeToHtml(PdfService $client)
     {
-        $service = new WordService();
-        $data = $service->changeToHtml(public_path("/sources/1/default.docx"));
+        $data = $client->changeToHtml("/sources/1/default.pdf");
         var_dump($data);
     }
 

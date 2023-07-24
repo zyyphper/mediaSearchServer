@@ -13,6 +13,7 @@ use Illuminate\Http\Response;
 class BaseAdminController extends AdminController
 {
     use DispatchesJobs;
+    use Platform;
 
     const IMPORT_LINE_NUM = 2000;
 

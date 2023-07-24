@@ -8,7 +8,7 @@ use App\Libraries\Base\BaseModel;
 use App\Models\Admin\Platform;
 use App\Models\Admin\PlatformUser;
 
-class FileTemplate extends BaseModel
+class FileGroup extends BaseModel
 {
 
     protected $connection = "business";
@@ -16,8 +16,6 @@ class FileTemplate extends BaseModel
     protected $fillable = [
         'platform_id',
         'name',
-        'file_type',
-        'status',
     ];
 
     public function platform()
@@ -25,14 +23,9 @@ class FileTemplate extends BaseModel
         return $this->belongsTo(Platform::class);
     }
 
-    public function operator()
+    public function templates()
     {
-        return $this->belongsTo(PlatformUser::class);
-    }
-
-    public function groups()
-    {
-        return $this->belongsToMany(FileGroup::class,FileGroupTemplate::class,'group_id','template_id');
+        return $this->belongsToMany(FileTemplate::class,FileGroupTemplate::class,'template_id','group_id');
     }
 
 
