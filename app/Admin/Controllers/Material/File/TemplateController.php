@@ -46,7 +46,14 @@ class TemplateController extends BaseAdminController
         if ($this->isRootPlatform()) {
             $grid->platform()->name("平台");
         }
-        $grid->groups()->name("分组集合");
+        $grid->column('groups','分组集合')->display(function ($groups) {
+
+            $groups = array_map(function ($group) {
+                return "<span class='label label-success'>{$group['name']}</span>";
+            }, $groups);
+
+            return join('&nbsp;', $groups);
+        });
         $grid->column('name', '模板名称')->editable();
         $grid->column('type','文件类型')->using(FileType::$texts);
 
