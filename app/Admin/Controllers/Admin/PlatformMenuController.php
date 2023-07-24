@@ -4,8 +4,7 @@
 namespace App\Admin\Controllers\Admin;
 
 
-use App\Models\Admin\Enum\isAdmin;
-use App\Models\Admin\PlatformMenu;
+use App\Libraries\Base\Platform;
 use Encore\Admin\Controllers\MenuController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -14,10 +13,11 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
 use Encore\Admin\Tree;
 use Encore\Admin\Widgets\Box;
+use App\Models\Admin\Platform AS PlatformModel;
 
 class PlatformMenuController extends MenuController
 {
-
+    use Platform;
     /**
      * Index interface.
      *
@@ -41,7 +41,7 @@ class PlatformMenuController extends MenuController
                     $permissionModel = config('admin.database.permissions_model');
                     $roleModel = config('admin.database.roles_model');
 
-                    $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
+                    $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions(PlatformModel::all()->pluck('name','id')));
                     $form->text('title', trans('admin.title'))->rules('required');
                     $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
@@ -65,11 +65,6 @@ class PlatformMenuController extends MenuController
 
         $tree = new Tree(new $menuModel());
         $tree->disableCreate();
-
-//        var_dump(Admin::user()->platform_id);
-//        $tree->query(function ($model) {
-//            return $model->where('platform_id',Admin::user()->platform_id);
-//        });
 
         $tree->branch(function ($branch) {
             $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
@@ -100,11 +95,20 @@ class PlatformMenuController extends MenuController
         $menuModel = config('admin.database.menu_model');
         $permissionModel = config('admin.database.permissions_model');
         $roleModel = config('admin.database.roles_model');
+        $status = [
+            'on' => ['value'=>0,'text'=>'启用','color'=>'primary'],
+            'off' => ['value'=>1,'text'=>'禁用','color'=>'default']
+        ];
 
         $form = new Form(new $menuModel());
 
         $form->display('id', 'ID');
-
+        if ($this->isRootPlatform()) {
+            $form->hasMany('platformConfigs','平台配置',function (Form $form) use($status){
+               $form->select('platform_id','平台')->options(Platform);
+               $form->switch('status','状态')->states($status);
+            });
+        }
         $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
         $form->text('title', trans('admin.title'))->rules('required');
         $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());

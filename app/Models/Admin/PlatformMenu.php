@@ -7,6 +7,7 @@ namespace App\Models\Admin;
 use App\Models\Admin\Enum\IsAdmin;
 use Encore\Admin\Auth\Database\Menu;
 use Encore\Admin\Facades\Admin;
+use \Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +22,11 @@ class PlatformMenu extends Menu
     {
         $platformModel = config('admin.database.platforms_model');
         return $this->belongsTo($platformModel,'platform_id','id');
+    }
+
+    public function platformConfigs() : HasMany
+    {
+        return $this->hasMany(PlatformMenuConfig::class,'menu_id','id');
     }
 
     /**
@@ -39,11 +45,11 @@ class PlatformMenu extends Menu
             $query->with('roles');
         }
         if (Admin::user()->platform_id === 0) {
-            return $query->where('platform_id',Admin::user()->platform_id)->selectRaw('*, '.$orderColumn.' ROOT')->orderByRaw($byOrder)->get()->toArray();
+            return $query->selectRaw('*, '.$orderColumn.' ROOT')->orderByRaw($byOrder)->get()->toArray();
         }
 
-        return $query->where(function ($query) {
-                $query->where('platform_id',Admin::user()->platform_id)->orWhere('is_admin',IsAdmin::YES);
+        return $query->whereHas('platformConfigs',function ($query) {
+                $query->where('platform_id',Admin::user()->platform_id);
             })->selectRaw('*, '.$orderColumn.' ROOT')
             ->orderByRaw($byOrder)
             ->get()->toArray();
