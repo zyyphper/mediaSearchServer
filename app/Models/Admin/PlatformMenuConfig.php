@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PlatformMenuConfig extends BaseModel
 {
     protected $table = "admin_menu_configs";
+    protected $primaryKey = "menu_id";
     protected $fillable = ['menu_id','platform_id','status'];
 
 
