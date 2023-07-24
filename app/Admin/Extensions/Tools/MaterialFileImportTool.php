@@ -3,21 +3,16 @@
 namespace App\Admin\Extensions\Tools;
 
 use App\Libraries\Base\Platform;
+use App\Models\Admin\Platform as PlatformModel;
 use App\Models\Material\FileGroup;
 use Encore\Admin\Actions\Action;
-use \App\Models\Admin\Platform AS PlatformModel;
 
-class MaterialExportTool extends Action
+class MaterialFileImportTool extends Action
 {
     use Platform;
+    public $name = '导入媒资数据';
 
-    public $name = '导出数据';
-    protected $selector = '.export-post';
-
-    public function getHandleRoute()
-    {
-        return 'source/examine';
-    }
+    protected $selector = '.import-post';
 
     public function form()
     {
@@ -33,10 +28,10 @@ class MaterialExportTool extends Action
         $this->date('end_time', '结束时间');
     }
 
-    public function html()
+    public function render()
     {
         return <<<HTML
-        <a class="btn btn-sm btn-default import-post" style="margin-right: 10px"><i class="fa fa-upload"></i>导出数据</a>
+        <a class="btn btn-sm btn-default import-post" style="margin-right: 10px"><i class="fa fa-upload"></i>文件导入</a>
 HTML;
     }
 }

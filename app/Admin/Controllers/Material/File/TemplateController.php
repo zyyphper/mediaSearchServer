@@ -3,14 +3,12 @@
 namespace App\Admin\Controllers\Material\File;
 
 
-use App\Admin\Extensions\Tools\MaterialExportTool;
+use App\Admin\Extensions\Tools\MaterialFileImportTool;
 use App\Helpers\Tools;
 use App\Libraries\Base\BaseAdminController;
 use App\Models\Material\Enums\FileType;
 use App\Models\Material\FileTemplate;
-use App\Services\Excel\Exports\Tpl\SourceExportTpl;
 use Encore\Admin\Grid;
-use Encore\Admin\Layout\Content;
 
 class TemplateController extends BaseAdminController
 {
@@ -40,7 +38,7 @@ class TemplateController extends BaseAdminController
         $grid->model()->latest();
 
         $grid->tools(function ($tools) use ($grid) {
-            $tools->append(new MaterialExportTool());
+            $tools->append(new MaterialFileImportTool());
         });
         $grid->disableCreateButton();
 
@@ -97,27 +95,6 @@ class TemplateController extends BaseAdminController
         return $grid;
     }
 
-    /**
-     * 数据导入页面 + 数据导入检查
-     * @param Content $content
-     * @return Content|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     */
-    public function importPage(Content $content)
-    {
-        if ('GET' == request()->method()) {
-
-        } else {
-            // 验证文件
-            $data = Tools::checkRequest('file');
-            $groupIds = request('group_ids');
-
-            // 验证数据量
-            if ($data['file']->getSize() > 819200)
-                return response(Tools::error('文件大小不能大于800KB'));
-
-            return response(Tools::setData($checkData));
-        }
-    }
 
     /**
      * 数据导入

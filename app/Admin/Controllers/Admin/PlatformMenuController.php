@@ -41,7 +41,7 @@ class PlatformMenuController extends MenuController
                     $permissionModel = config('admin.database.permissions_model');
                     $roleModel = config('admin.database.roles_model');
 
-                    $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions(PlatformModel::all()->pluck('name','id')));
+                    $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
                     $form->text('title', trans('admin.title'))->rules('required');
                     $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
@@ -105,7 +105,7 @@ class PlatformMenuController extends MenuController
         $form->display('id', 'ID');
         if ($this->isRootPlatform()) {
             $form->hasMany('platformConfigs','平台配置',function (Form $form) use($status){
-               $form->select('platform_id','平台')->options(Platform);
+               $form->select('platform_id','平台')->options(PlatformModel::all()->pluck('name','id'));
                $form->switch('status','状态')->states($status);
             });
         }
