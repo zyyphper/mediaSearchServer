@@ -24,6 +24,9 @@ trait HasCompositePrimaryKey
     */
     protected function setKeysForSaveQuery(Builder $query)
     {
+        if (is_string($this->getKeyName())) {
+            return $query->where($this->getKeyName(), '=', $this->getKeyForSaveQuery());
+        }
         foreach ($this->getKeyName() as $key) {
             $query->where($key, '=', $this->getKeyForSaveQuery());
         }
