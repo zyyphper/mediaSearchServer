@@ -58,7 +58,7 @@ class GroupController extends BaseAdminController
         $form = new Form($this->model);
         $form->text("name","分组描述");
         $form->saving(function (Form $form) {
-            $form->model()->id = app("snowFlake")->id;
+            if ($form->isCreating()) $form->model()->id = app("snowFlake")->id;
             $form->model()->platform_id = Admin::user()->platform_id;
         });
         return $form;

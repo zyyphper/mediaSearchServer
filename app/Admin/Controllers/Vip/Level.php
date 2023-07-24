@@ -70,7 +70,7 @@ class Level extends BaseAdminController
         ];
         $form->switch('status','状态')->states($status);
         $form->saving(function (Form $form) {
-            $form->model()->id = app('snowFlake')->id;
+            if ($form->isCreating()) $form->model()->id = app('snowFlake')->id;
             $form->model()->vip_level = VipLevel::$defaultLevel;
         });
 
