@@ -104,7 +104,7 @@ class PlatformMenuController extends MenuController
 
         $form->display('id', 'ID');
         if ($this->isRootPlatform()) {
-            $form->hasMany('platformConfigs','平台配置',function (Form\NestedForm $form) use($status){
+            $form->morphMany('platformConfigs','平台配置',function (Form\NestedForm $form) use($status){
                $form->select('platform_id','平台')->options(PlatformModel::all()->pluck('name','id'));
                $form->switch('status','状态')->states($status);
             });
