@@ -31,11 +31,11 @@ Route::group([
             $router->resource('groups', 'GroupController');
             //资源
             $router->resource('sources','SourceController');
-            $router->group(['prefix' => 'template','namespace' => 'Template'],function() use ($router) {
-                // 模板导入
-                $router->post('import', 'TemplateController@import')->name('material_files_import');
-
-            });
+//            $router->group(['prefix' => 'template','namespace' => 'Template'],function() use ($router) {
+//                // 模板导入
+//                $router->post('import', 'TemplateController@import')->name('material_files_import');
+//
+//            });
 
         });
     });
