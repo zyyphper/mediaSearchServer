@@ -5,6 +5,7 @@ namespace App\Admin\Controllers\Admin;
 
 
 use App\Libraries\Base\Platform;
+use App\Models\Admin\Enums\IsAdmin;
 use Encore\Admin\Controllers\MenuController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -104,10 +105,7 @@ class PlatformMenuController extends MenuController
 
         $form->display('id', 'ID');
         if ($this->isRootPlatform()) {
-            $form->morphMany('platformConfigs','平台配置',function (Form\NestedForm $form) use($status){
-               $form->select('platform_id','平台')->options(PlatformModel::all()->pluck('name','id'));
-               $form->switch('status','状态')->states($status);
-            });
+            $form->multipleSelect('platformConfigs','平台配置')->options(PlatformModel::all()->where('is_admin',IsAdmin::NO)->pluck('name','id'));
         }
         $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
         $form->text('title', trans('admin.title'))->rules('required');
