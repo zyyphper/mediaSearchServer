@@ -200,6 +200,7 @@ return [
         'role_users_table'       => 'admin_role_users',
         'role_permissions_table' => 'admin_role_permissions',
         'role_menu_table'        => 'admin_role_menu',
+        'platform_menu_table'    => 'admin_menu_configs'
     ],
 
     /*

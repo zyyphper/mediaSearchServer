@@ -6,6 +6,7 @@ namespace App\Models\Admin;
 
 use Encore\Admin\Auth\Database\Menu;
 use Encore\Admin\Facades\Admin;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use \Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
@@ -23,9 +24,11 @@ class PlatformMenu extends Menu
         return $this->belongsTo($platformModel,'platform_id','id');
     }
 
-    public function platformConfigs() : HasMany
+    public function platformConfigs() : BelongsToMany
     {
-        return $this->hasMany(PlatformMenuConfig::class,'menu_id','id');
+        $pivotTable = config('admin.database.platform_menu_table');
+        $relatedModel = config('admin.database.platforms_model');
+        return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'platform_id');
     }
 
     /**
