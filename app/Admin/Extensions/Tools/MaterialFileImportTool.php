@@ -24,8 +24,6 @@ class MaterialFileImportTool extends Action
         $this->multipleSelect('group_id', '分组')->options(function () {
             return FileGroup::pluck('name', 'id');
         })->required();
-        $this->date('start_time', '开始时间');
-        $this->date('end_time', '结束时间');
     }
 
     public function render()

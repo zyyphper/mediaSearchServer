@@ -9,6 +9,7 @@ use App\Models\Vip\VipLevel;
 
 class Platform extends BaseModel
 {
+    protected $connection = "system";
     protected $fillable = [
         'id',
         'name',
