@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models\Admin\Enum;
+namespace App\Models\Admin\Enums;
 
 
 use App\Libraries\Base\BaseEnum;

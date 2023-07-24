@@ -8,7 +8,7 @@ use App\Libraries\Base\BaseModel;
 use App\Models\Admin\Platform;
 use App\Models\Admin\PlatformUser;
 
-class FileTemplate extends BaseModel
+class FileSource extends BaseModel
 {
 
     protected $connection = "business";
@@ -17,7 +17,8 @@ class FileTemplate extends BaseModel
         'platform_id',
         'name',
         'file_type',
-        'status',
+        'origin_type',
+        'origin_tpl_id',
         'operator'
     ];
 
@@ -33,13 +34,12 @@ class FileTemplate extends BaseModel
 
     public function groups()
     {
-        return $this->belongsToMany(FileGroup::class,FileGroupTemplate::class,'group_id','template_id');
+        return $this->belongsToMany(FileGroup::class,FileGroupSource::class,'group_id','source_id');
     }
 
-    public function sources()
+    public function template()
     {
-        return $this->hasMany(FileSource::class,'origin_tpl_id');
+        return $this->belongsTo(FileTemplate::class,'origin_tpl_id');
     }
-
 
 }

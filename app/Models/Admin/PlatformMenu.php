@@ -4,7 +4,6 @@
 namespace App\Models\Admin;
 
 
-use App\Models\Admin\Enum\IsAdmin;
 use Encore\Admin\Auth\Database\Menu;
 use Encore\Admin\Facades\Admin;
 use \Illuminate\Database\Eloquent\Relations\HasMany;
