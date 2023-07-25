@@ -8,6 +8,7 @@ use App\Helpers\Tools;
 use App\Libraries\Base\BaseAdminController;
 use App\Models\Material\Enums\FileType;
 use App\Models\Material\FileTemplate;
+use App\Services\Material\FileTemplateService;
 use Encore\Admin\Grid;
 
 class TemplateController extends BaseAdminController
@@ -38,7 +39,7 @@ class TemplateController extends BaseAdminController
         $grid->model()->latest();
 
         $grid->tools(function ($tools) use ($grid) {
-            $tools->append(new MaterialImport());
+            $tools->append(new MaterialImport(FileTemplateService::class));
         });
         $grid->disableCreateButton();
 

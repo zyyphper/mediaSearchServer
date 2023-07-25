@@ -5,7 +5,6 @@ namespace App\Admin\Actions;
 use App\Helpers\Tools;
 use App\Libraries\Base\Platform;
 use App\Models\Material\FileGroup;
-use App\Services\Material\FileTemplateService;
 use Encore\Admin\Actions\Action;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Database\QueryException;
@@ -15,18 +14,26 @@ use Illuminate\Support\Facades\DB;
 class MaterialImport extends Action
 {
     use Platform;
+
+    public function __construct($service)
+    {
+        $this->service = $service;
+        parent::__construct();
+    }
+
+    protected $service = null;
     protected $selector = '.material-import';
 
-    public function handle(Request $request,FileTemplateService $service)
+    public function handle(Request $request)
     {
         $filePaths = $request->file('files');
         $platformId = $request->get('platform_id') ?? Admin::user()->platform_id;
         $groupIds = $request->get('group_ids');
-        $service->setPlatform($platformId);
+        $this->service->setPlatform($platformId);
         DB::beginTransaction();
         try {
             foreach ($filePaths as $path) {
-                $service->importData($path,$groupIds);
+                $this->service->importData($path,$groupIds);
             }
             DB::commit();
         }catch (QueryException $exception) {

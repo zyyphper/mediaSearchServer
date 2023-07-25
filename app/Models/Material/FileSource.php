@@ -7,19 +7,22 @@ namespace App\Models\Material;
 use App\Libraries\Base\BaseModel;
 use App\Models\Admin\Platform;
 use App\Models\Admin\PlatformUser;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FileSource extends BaseModel
 {
-
+    use SoftDeletes;
     protected $connection = "business";
 
     protected $fillable = [
+        'id',
         'platform_id',
         'name',
         'file_type',
         'origin_type',
         'origin_tpl_id',
-        'operator'
+        'operator',
+        'original_url'
     ];
 
     public function platform()

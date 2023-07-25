@@ -6,16 +6,15 @@ namespace App\Services\Material;
 
 use App\Helpers\Tools;
 use App\Libraries\Base\BaseService;
-use App\Models\Material\Enums\FileHandleStatus;
-use App\Models\Material\Enums\FileStatus;
+use App\Models\Material\Enums\FileOriginType;
 use App\Models\Material\Enums\FileType;
-use App\Models\Material\FileTemplate;
+use App\Models\Material\FileSource;
 use Encore\Admin\Facades\Admin;
 
-class FileTemplateService extends BaseService
+class FileSourceService extends BaseService
 {
     /**
-     * @var FileTemplate
+     * @var FileSource
      */
     protected $model;
 
@@ -29,8 +28,7 @@ class FileTemplateService extends BaseService
             'name' => $info['filename'],
             'original_url' => $url,
             'file_type' => FileType::$extensionMap[$info['extension']],
-            'status' => FileStatus::DISABLE,
-            'handle_status' => FileHandleStatus::WAIT,
+            'origin_type' => FileOriginType::IMPORT,
             'operator' => Admin::user()->id
         ]);
         $model->groups()->sync($groupIds);
