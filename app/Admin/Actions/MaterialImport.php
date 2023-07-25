@@ -24,7 +24,7 @@ class MaterialImport extends Action
     {
         if ($this->isRootPlatform()) {
             $this->select('platform_id', '平台')->options(function () {
-                return PlatformModel::pluck('name', 'id');
+                return $this->getUserPlatform();
             })->required();
         }
         $this->multipleSelect('group_id', '分组')->options(function () {

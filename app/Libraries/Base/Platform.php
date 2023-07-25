@@ -3,6 +3,7 @@
 
 namespace App\Libraries\Base;
 
+use App\Models\Admin\Enums\IsAdmin;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Grid;
 use App\Models\Admin\Platform AS model;
@@ -24,5 +25,10 @@ trait Platform
     {
         $platformModel = model::find(Admin::user()->platform_id);
         return $platformModel->is_admin !== 0;
+    }
+
+    public function getUserPlatform()
+    {
+        return model::where('is_admin',IsAdmin::NO)->pluck('name','id');
     }
 }
