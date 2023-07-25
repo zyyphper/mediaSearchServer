@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class PlatformMenu extends Menu
 {
+    use \App\Libraries\Base\Platform;
     protected $fillable = ['platform_id','parent_id', 'order', 'title', 'icon', 'uri', 'permission','is_admin'];
 
     /**
@@ -46,7 +47,7 @@ class PlatformMenu extends Menu
         if (config('admin.check_menu_roles') !== false) {
             $query->with('roles');
         }
-        if (Admin::user()->platform_id === 0) {
+        if ($this->isRootPlatform()) {
             return $query->selectRaw('*, '.$orderColumn.' ROOT')->orderByRaw($byOrder)->get()->toArray();
         }
 

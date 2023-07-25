@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PlatformRole extends Role
 {
+    use \App\Libraries\Base\Platform;
     protected $fillable = ['platform_id','name', 'slug'];
 
     /**
@@ -24,7 +25,7 @@ class PlatformRole extends Role
 
     public static function getPlatformRole($platformId)
     {
-        if ($platformId === 0) {
+        if (self::isRootPlatform()) {
             return self::all()->pluck('name','id');
         }
         return self::where('platform_id',$platformId)->pluck('name', 'id');

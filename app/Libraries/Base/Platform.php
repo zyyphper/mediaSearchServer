@@ -10,10 +10,15 @@ use App\Models\Admin\Platform AS model;
 
 trait Platform
 {
+    public static function __callStatic($name, $arguments)
+    {
+        return (new self())->$name($arguments);
+    }
+
     public function platformAuth(Grid &$grid)
     {
         $platformId = Admin::user()->platform_id;
-        if ($platformId === 0) {
+        if ($this->isRootPlatform()) {
             //超平台系统管理员 无需限制
             $grid->platform()->name("平台");
             return;
