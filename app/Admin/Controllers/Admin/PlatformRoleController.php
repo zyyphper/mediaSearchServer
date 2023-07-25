@@ -73,7 +73,7 @@ class PlatformRoleController extends RoleController
         $form->display('updated_at', trans('admin.updated_at'));
 
         $form->saving(function (Form $form) {
-            $form->platform_id = Admin::user()->platform_id;
+            $form->model()->platform_id = Admin::user()->platform_id;
         });
 
         return $form;
