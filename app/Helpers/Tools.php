@@ -466,18 +466,6 @@ class Tools
         return Carbon::parse($timeObj)->format($format);
     }
 
-    /**
-     * 清除缓存
-     * @param $tableName
-     * @param $id
-     * @return bool
-     */
-    public static function delObjectCache($tableName, $id)
-    {
-        $key = "{$GLOBALS['company_id']}:$tableName:$id";
-        if (Cache::delete($key)) return true;
-        return false;
-    }
 
     /**
      * 转换为时间区间
@@ -815,21 +803,7 @@ class Tools
         return mkdir($path);
     }
 
-    public static function MkCPDir($nasPath,$encode_code) {
-        if(!is_dir($nasPath)) {
-            return false;
-        }
-        $path = $nasPath.'cp_'.$encode_code;
-        if(!mkdir($path)) {
-            return  false;
-        }
-        mkdir($path.'/processed');
-        mkdir($path.'/processed_backup');
-        mkdir($path.'/source');
-        mkdir($path.'/source_fail');
-        mkdir($path.'/source_pass');
-        return true;
-    }
+
 
     public static function getMP4Info($path)
     {
@@ -855,18 +829,6 @@ class Tools
         ];
     }
 
-    public static function MkTplDir($path)
-    {
-        $data = explode('/',$path);
-        $path = env('NAS4_PATH').'vodmedia/';
-        foreach ($data as $value) {
-            $path = $path.$value.'/';
-            if(is_dir($path)) {
-                continue;
-            }
-            mkdir($path);
-        }
-    }
 
     /**
      * 转换接收的XML
@@ -921,6 +883,11 @@ class Tools
         return $array;
     }
 
+    public static function getFileInfo($url)
+    {
+        $path = parse_url($url)['path'];
+        return pathinfo($path);
+    }
 
 
 }

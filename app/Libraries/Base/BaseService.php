@@ -14,6 +14,11 @@ use function PHPUnit\Framework\isNull;
 class BaseService
 {
     /**
+     * 平台ID
+     * @var null
+     */
+    public $platformId = null;
+    /**
      * 服务名
      * @var string
      */
@@ -52,6 +57,12 @@ class BaseService
         $this->autoSetModel();
         // 自动初始化函数调用
         method_exists($this, '_init') && call_user_func(array($this, '_init'));
+    }
+
+    public function setPlatform(int $id)
+    {
+        $this->platformId = $id;
+        return $this;
     }
 
     /**

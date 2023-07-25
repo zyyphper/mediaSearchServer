@@ -14,11 +14,13 @@ class FileTemplate extends BaseModel
     protected $connection = "business";
 
     protected $fillable = [
+        'id',
         'platform_id',
         'name',
         'file_type',
         'status',
-        'operator'
+        'operator',
+        'original_url'
     ];
 
     public function platform()

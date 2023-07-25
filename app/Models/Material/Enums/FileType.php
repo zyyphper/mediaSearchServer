@@ -17,4 +17,11 @@ class FileType extends BaseEnum
         self::PDF => 'pdf',
         self::EXCEL => 'excel'
     ];
+
+    public static array $extensionMap = [
+        'docx' => self::WORD,
+        'doc' => self::WORD,
+        'pdf' => self::PDF,
+        'xlsx' => self::EXCEL
+    ];
 }
