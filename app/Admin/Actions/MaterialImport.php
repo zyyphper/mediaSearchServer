@@ -3,9 +3,9 @@
 namespace App\Admin\Actions;
 
 use App\Libraries\Base\Platform;
-use App\Models\Admin\Platform as PlatformModel;
 use App\Models\Material\FileGroup;
 use Encore\Admin\Actions\Action;
+use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 
 class MaterialImport extends Action
@@ -15,9 +15,10 @@ class MaterialImport extends Action
 
     public function handle(Request $request)
     {
-        // $request ...
-
-        return $this->response()->success('Success message...')->refresh();
+        $file = $request->file('file');
+        $platformId = $request->get('platform_id') ?? Admin::user()->platform_id;
+        $groupIds = $request->get('group_ids');
+        return $this->response()->success($platformId."-".$groupIds)->refresh();
     }
 
     public function form()
@@ -27,11 +28,10 @@ class MaterialImport extends Action
                 return $this->getUserPlatform();
             })->required();
         }
-        $this->multipleSelect('group_id', '分组')->options(function () {
+        $this->multipleSelect('group_ids', '分组')->options(function () {
             return FileGroup::pluck('name', 'id');
         })->required();
-        $this->date('start_time', '开始时间');
-        $this->date('end_time', '结束时间');
+        $this->file('file','文件');
     }
 
     public function html()
