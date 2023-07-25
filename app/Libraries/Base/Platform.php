@@ -5,6 +5,7 @@ namespace App\Libraries\Base;
 
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Grid;
+use App\Models\Admin\Platform AS model;
 
 trait Platform
 {
@@ -21,6 +22,7 @@ trait Platform
 
     public function isRootPlatform()
     {
-        return Admin::user()->platform_id === 0;
+        $platformModel = model::find(Admin::user()->platform_id);
+        return $platformModel->is_admin !== 0;
     }
 }
