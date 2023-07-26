@@ -26,15 +26,14 @@ class MaterialImport extends Action
 
     public function handle(Request $request)
     {
-        $filePaths = $request->file('files');
+        $file = $request->file('file');
+        return $this->response()->error(var_dump($file))->refresh();
         $platformId = $request->get('platform_id') ?? Admin::user()->platform_id;
         $groupIds = $request->get('group_ids');
         $this->service->setPlatform($platformId);
         DB::beginTransaction();
         try {
-            foreach ($filePaths as $path) {
-                $this->service->importData($path,$groupIds);
-            }
+            $this->service->importData($path,$groupIds);
             DB::commit();
         }catch (QueryException $exception) {
             DB::rollBack();
@@ -54,7 +53,8 @@ class MaterialImport extends Action
         $this->multipleSelect('group_ids', '分组')->options(function () {
             return FileGroup::pluck('name', 'id');
         })->required();
-        $this->multipleFile('files');
+        $this->file("file");
+//        $this->multipleFile('files'); //不给用
     }
 
     public function html()
