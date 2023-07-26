@@ -53,8 +53,8 @@ class MaterialImport extends Action
         $this->multipleSelect('group_ids', '分组')->options(function () {
             return FileGroup::pluck('name', 'id');
         })->required();
-        $this->multipleImage("file");
-//        $this->multipleFile('files'); //不给用
+        $this->file("file");
+
     }
 
     public function html()
