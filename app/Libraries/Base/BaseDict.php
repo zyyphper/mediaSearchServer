@@ -4,9 +4,6 @@
 namespace App\Libraries\Base;
 
 
-use App\Models\Vip\VipDict;
-use Faker\Provider\Base;
-
 class BaseDict
 {
     const SHOW = 1;
@@ -18,7 +15,7 @@ class BaseDict
      * 字典模型
      * @var
      */
-    protected string $model = BaseModel::class;
+    protected static string $model = BaseModel::class;
     /**
      * 字典数据
      * @var array
@@ -32,9 +29,9 @@ class BaseDict
 
     private function __construct($type)
     {
-        var_dump($this->model);die;
-        $this->data = $this->model::where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('code','name');
-        $this->desc = $this->model::where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('desc','code');
+        self::$model = new self::$model();
+        $this->data = self::$model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('code','name');
+        $this->desc = self::$model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('desc','code');
     }
 
     private function __clone()
