@@ -4,6 +4,9 @@
 namespace App\Libraries\Base;
 
 
+use App\Models\Vip\VipDict;
+use Faker\Provider\Base;
+
 class BaseDict
 {
     const SHOW = 1;
@@ -29,7 +32,6 @@ class BaseDict
 
     private function __construct($type)
     {
-        $this->model = new $this->model();
         var_dump($this->model);die;
         $this->data = $this->model::where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('code','name');
         $this->desc = $this->model::where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('desc','code');
@@ -40,6 +42,11 @@ class BaseDict
         // TODO: Implement __clone() method.
     }
 
+    /**
+     * @param $type
+     * @param  $model
+     * @return BaseDict|null
+     */
     public static function load($type)
     {
         if (!(self::$instance instanceof self) || self::$type != $type) {

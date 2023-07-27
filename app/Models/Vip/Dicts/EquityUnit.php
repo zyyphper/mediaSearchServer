@@ -15,5 +15,4 @@ class EquityUnit extends BaseDict
     const SPACE_CAPACITY = 1010;
     const FILE_SEARCH = 1011;
     const TYPE_CONVERT = 1011;
-
 }
