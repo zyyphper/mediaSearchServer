@@ -10,14 +10,14 @@ use App\Models\Vip\VipDict;
 
 class EquityUnit extends BaseDict
 {
-    protected string $model = VipDict::class;
 
     const SPACE_CAPACITY = 1010;
     const FILE_SEARCH = 1011;
     const TYPE_CONVERT = 1011;
 
-    protected function setModel()
+    public static function load($type)
     {
-        $this->model = new VipDict();
+        return parent::__load(VipDict::class,$type);
     }
+
 }
