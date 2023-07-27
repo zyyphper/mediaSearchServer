@@ -29,7 +29,7 @@ class BaseDict
 
     private function __construct($type)
     {
-        self::$model = new self::$model();
+        self::$model = app(self::$model);
         $this->data = self::$model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('code','name');
         $this->desc = self::$model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('desc','code');
     }
