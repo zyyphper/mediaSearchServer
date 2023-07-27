@@ -40,5 +40,10 @@ Route::group([
 
         });
     });
+    //会员服务
+    $router->group(['prefix' => 'vip','namespace' => 'Vip'],function () use ($router) {
+        //等级
+        $router->resource('levels','LevelController');
+    });
 
 });

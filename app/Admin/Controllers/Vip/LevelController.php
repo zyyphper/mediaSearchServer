@@ -13,7 +13,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Form\Field\Table;
 use Encore\Admin\Grid;
 
-class Level extends BaseAdminController
+class LevelController extends BaseAdminController
 {
     /**
      * Title for current resource.
