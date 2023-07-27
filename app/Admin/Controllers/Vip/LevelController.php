@@ -76,19 +76,19 @@ class LevelController extends BaseAdminController
             $form->text('name', '等级描述')->rules(['required|max:32']);
             $form->number('requirement_score', '等级达标分数')->rules(['required|min:1']);
         })->tab('等级权益',function (Form $form) {
-            $form->hasMany('levelEquities','权益',function (Form\NestedForm $form) {
-               $form->radio('equity_id','权益')->options(VipEquity::all()->pluck('name','id'))
-                   ->when(VipEquity::SPACE_CAPACITY,function (Form $form) {
-                        $form->number('num','数值');
-                        $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::SPACE_CAPACITY)->pluck());
-                   })->when(VipEquity::FILE_SEARCH,function (Form $form) {
-                       $form->number('num','数值');
-                       $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::FILE_SEARCH)->pluck());
-                   })->when(VipEquity::TYPE_CONVERT,function (Form $form) {
-                       $form->number('num','数值');
-                       $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::TYPE_CONVERT)->pluck());
-                   });
-            });
+//            $form->hasMany('levelEquities','权益',function (Form\NestedForm $form) {
+//               $form->radio('equity_id','权益')->options(VipEquity::all()->pluck('name','id'))
+//                   ->when(VipEquity::SPACE_CAPACITY,function (Form $form) {
+//                        $form->number('num','数值');
+//                        $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::SPACE_CAPACITY)->pluck());
+//                   })->when(VipEquity::FILE_SEARCH,function (Form $form) {
+//                       $form->number('num','数值');
+//                       $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::FILE_SEARCH)->pluck());
+//                   })->when(VipEquity::TYPE_CONVERT,function (Form $form) {
+//                       $form->number('num','数值');
+//                       $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::TYPE_CONVERT)->pluck());
+//                   });
+//            });
         });
 
         return $form;
