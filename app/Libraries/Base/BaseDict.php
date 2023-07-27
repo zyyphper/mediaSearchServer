@@ -21,10 +21,16 @@ class BaseDict
      * @var array
      */
     protected array $data;
+    /**
+     * 字典描述
+     * @var array
+     */
+    protected array $desc;
 
     private function __construct($type)
     {
         $this->data = $this->model::where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('code','name');
+        $this->desc = $this->model::where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('desc','code');
     }
 
     private function __clone()
@@ -46,5 +52,10 @@ class BaseDict
             throw new \Exception("未知的数据字典");
         }
         return $this->data[$name];
+    }
+
+    public function pluck()
+    {
+        return $this->desc;
     }
 }

@@ -25,4 +25,9 @@ class VipLevel extends BaseModel
     {
         return $this->belongsToMany(VipEquity::class,VipLevelEquity::class,'level_id','equity_id')->withPivot('num','unit');
     }
+
+    public function levelEquities()
+    {
+        return $this->hasMany(VipLevelEquity::class,'level_id','id');
+    }
 }

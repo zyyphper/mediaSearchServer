@@ -18,6 +18,6 @@ class VipEquity extends BaseModel
 
     const SPACE_CAPACITY = 1;
     const FILE_SEARCH = 2;
-    const TYPE_CHANGE = 3;
+    const TYPE_CONVERT = 3;
 
 }
