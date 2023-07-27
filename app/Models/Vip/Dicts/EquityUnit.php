@@ -13,4 +13,7 @@ class EquityUnit extends BaseDict
     protected string $model = VipDict::class;
 
     const SPACE_CAPACITY = 1010;
+    const FILE_SEARCH = 1011;
+    const TYPE_CONVERT_TIMES = 1011;
+
 }

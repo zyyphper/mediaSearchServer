@@ -5,8 +5,11 @@ namespace App\Admin\Controllers\Vip;
 
 
 use App\Libraries\Base\BaseAdminController;
+use App\Models\Vip\Dicts\EquityUnit;
+use App\Models\Vip\VipDict;
 use App\Models\Vip\VipLevel;
 use Encore\Admin\Form;
+use Encore\Admin\Form\Field\Table;
 use Encore\Admin\Grid;
 
 class Level extends BaseAdminController
@@ -44,12 +47,15 @@ class Level extends BaseAdminController
 
 
         $grid->column('level', 'LEVEL');
-        $grid->column('name', '会员等级')->editable();
-        $grid->column('requirement_score','等级达标分数');
-        $grid->column('space_capacity','空间容量');
-        $grid->column('type_change_times','类型转换次数');
+        $grid->column('name','会员等级')->expand(function ($model) {
+            $equityData = [];
+            foreach ($model->equities()->get() as $equity) {
+                $unitDict = VipDict::find($equity->pivot->unit);
+                $equityData = [$equity->id,$equity->name,$equity->pivot->num.$unitDict->desc];
+            }
+            return new Table(['ID', '权益','数量'], $equityData);
+        });
         $grid->column('created_at', '创建时间');
-
 
         $grid->actions(function ($actions) {
         });
