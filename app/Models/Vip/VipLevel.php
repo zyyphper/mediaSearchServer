@@ -21,4 +21,8 @@ class VipLevel extends BaseModel
         'type_change_times'
     ];
 
+    public function equities()
+    {
+        return $this->belongsToMany(VipEquity::class,VipLevelEquity::class,'level_id','equity_id');
+    }
 }

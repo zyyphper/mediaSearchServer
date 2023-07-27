@@ -3,13 +3,17 @@
 namespace App\Admin\Controllers\Material\File;
 
 
-use App\Admin\Actions\MaterialImport;
+use App\Admin\Extensions\Tools\MaterialFileImportTool;
 use App\Helpers\Tools;
 use App\Libraries\Base\BaseAdminController;
 use App\Models\Material\Enums\FileType;
 use App\Models\Material\FileTemplate;
+use App\Models\Vip\Dicts\EquityUnit;
+use App\Models\Vip\VipEquity;
 use App\Services\Material\FileTemplateService;
+use App\Services\Vip\VipPlatformEquityService;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 
 class TemplateController extends BaseAdminController
 {
@@ -39,7 +43,7 @@ class TemplateController extends BaseAdminController
         $grid->model()->latest();
 
         $grid->tools(function ($tools) use ($grid) {
-            $tools->append(new MaterialImport(FileTemplateService::class));
+            $tools->append(new MaterialFileImportTool());
         });
         $grid->disableCreateButton();
 
@@ -103,6 +107,49 @@ class TemplateController extends BaseAdminController
         return $grid;
     }
 
+
+    /**
+     * 数据导入页面 + 数据导入检查
+     * @param Content $content
+     * @param VipPlatformEquityService $equityService
+     * @return Content|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \ReflectionException
+     */
+    public function importPage(Content $content,VipPlatformEquityService $equityService)
+    {
+        //获取当前用户剩余存储空间
+        $spaceCapacityNum = $equityService->getEquityById(VipEquity::SPACE_CAPACITY,
+            EquityUnit::load(EquityUnit::SPACE_CAPACITY)->KB
+        );
+        if ('GET' == request()->method()) {
+            //获取当前用户所在平台的文件分组
+            $fileGroups = app('platform')->getFileGroups();
+            $content->title($this->title);
+            $content->description('导入');
+            return $content->row(view('materials.import_page', [
+                'origin_url' => url('admin/material/file/templates'),
+                'check_url' => route('material_file_template_import_page'),
+                'submit_url' => route('material_file_template_import'),
+                'file_groups' => $fileGroups,
+                'file_max_num' => self::IMPORT_FILE_MAX_NUM,
+                'spaceCapacityNum' => $spaceCapacityNum,
+            ]));
+        } else {
+            // 验证文件
+            $data = Tools::checkRequest('file');
+            $projectId = request('project_id');
+            if (!$projectId) {
+                return response(Tools::error('请先选择项目'));
+            }
+            // 验证数据量
+            if ($data['file']->getSize() > 819200)
+                return response(Tools::error('文件大小不能大于800KB'));
+
+            $checkData = $this->service->importDataCheck($excelData);
+
+            return response(Tools::setData($checkData));
+        }
+    }
 
     /**
      * 数据导入

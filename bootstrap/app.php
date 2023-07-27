@@ -44,6 +44,10 @@ $app->singleton(
 $app->singleton('snowFlake',function () {
     return \App\Services\Common\SnowFlakeService::load();
 });
+
+$app->singleton('platform',function () {
+    return (new \App\Services\Common\PlatformService())->setPlatform(\Encore\Admin\Facades\Admin::user()->platform_id);
+});
 /*
 |--------------------------------------------------------------------------
 | Return The Application

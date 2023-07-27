@@ -25,17 +25,18 @@ Route::group([
     $router->group(['prefix' => 'material','namespace' => 'Material'], function () use ($router) {
         //文件
         $router->group(['prefix' => 'file','namespace' => 'File'], function () use ($router) {
-            //模板
-            $router->resource('templates', 'TemplateController');
-            //分组
+            //文件分组
             $router->resource('groups', 'GroupController');
-            //资源
+            //文件资源
             $router->resource('sources','SourceController');
-//            $router->group(['prefix' => 'template','namespace' => 'Template'],function() use ($router) {
-//                // 模板导入
-//                $router->post('import', 'TemplateController@import')->name('material_files_import');
-//
-//            });
+            //文件模板
+            $router->group(['prefix' => 'templates','namespace' => 'Template'],function() use ($router) {
+                $router->resource('templates', 'TemplateController');
+                $router->match(['get', 'post'], 'import_page', 'TemplateController@importPage')->name('material_file_templates_import_page');
+                // 模板导入
+                $router->post('import', 'TemplateController@import')->name('material_file_templates_import');
+
+            });
 
         });
     });

@@ -889,5 +889,17 @@ class Tools
         return pathinfo($path);
     }
 
-
+    public static function spaceCapacityUnitConvert($num,$unit,$needUnit)
+    {
+        $unitMap  = ['B','KB','MB','GB','TB'];
+        if (!in_array($unit,$unitMap) || !in_array($needUnit,$unitMap)) {
+            throw new \Exception("非法存储单位");
+        }
+        $unitMap = array_flip($unitMap);
+        if ($unitMap[$needUnit] == $unitMap[$unit]) return $num;
+        if ($unitMap[$needUnit] > $unitMap[$unit]) {
+            return round($num / pow(1024,$unitMap[$needUnit]-$unitMap[$unit]+1),2);
+        }
+        return round($num * pow(1024,$unitMap[$unit]-$unitMap[$needUnit]+1),2);
+    }
 }

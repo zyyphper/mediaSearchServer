@@ -16,6 +16,7 @@ class BaseAdminController extends AdminController
     use Platform;
 
     const IMPORT_LINE_NUM = 2000;
+    const IMPORT_FILE_MAX_NUM = 10;
 
     /**
      * 定义服务名称

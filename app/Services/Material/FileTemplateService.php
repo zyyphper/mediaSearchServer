@@ -35,4 +35,5 @@ class FileTemplateService extends BaseService
         ]);
         $model->groups()->sync($groupIds);
     }
+
 }

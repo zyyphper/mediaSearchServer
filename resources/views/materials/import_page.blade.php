@@ -47,19 +47,24 @@
 
                 <div class="box-tools">
                     <div class="btn-group pull-right" style="margin-right: 5px">
-                        <a href="{{url('admin/media_resource')}}"
-                           class="btn btn-sm btn-default" title="媒资列表"><i class="fa fa-list"></i><span
-                                class="hidden-xs">&nbsp;媒资列表</span></a>
+                        <a href="{{$origin_url}}"
+                           class="btn btn-sm btn-default" title="上级列表"><i class="fa fa-list"></i><span
+                                class="hidden-xs">&nbsp;</span></a>
                     </div>
                 </div>
             </div>
             <div class="jumbotron">
                 <div id="input-select-block">
+                    <select class="selectpicker" multiple>
+                        @foreach($file_groups as $id => $name)
+                            <option value="{{$id}}">{{$name}}</option>
+                        @endforeach
+                    </select>
                     <button class="btn btn-primary btn-lg" role="button" id="upload-btn">
                         <i class="fa fa-upload "></i>选择文件
                     </button>
                     <div class="alert alert-secondary" role="alert" style="color: red;">
-                        单次导入文件条数为{{$import_line_num}}条
+                        单次导入文件个数最大为{{$file_max_num}}个
                     </div>
                 </div>
 
