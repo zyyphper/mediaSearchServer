@@ -5,7 +5,6 @@ namespace App\Admin\Controllers\Vip;
 
 
 use App\Libraries\Base\BaseAdminController;
-use App\Models\Vip\Dicts\EquityUnit;
 use App\Models\Vip\VipDict;
 use App\Models\Vip\VipLevel;
 use Encore\Admin\Form;
@@ -55,6 +54,7 @@ class Level extends BaseAdminController
             }
             return new Table(['ID', '权益','数量'], $equityData);
         });
+        $grid->column('requirement_score','达标分数');
         $grid->column('created_at', '创建时间');
 
         $grid->actions(function ($actions) {
@@ -69,17 +69,9 @@ class Level extends BaseAdminController
     protected function form()
     {
         $form = new Form($this->model);
-        $form->text('name', '平台名称');
-        $status = [
-            'on' => ['value'=>1,'text'=>'启用','color'=>'primary'],
-            'off' => ['value'=>0,'text'=>'禁用','color'=>'default']
-        ];
-        $form->switch('status','状态')->states($status);
-        $form->saving(function (Form $form) {
-            if ($form->isCreating()) $form->model()->id = app('snowFlake')->id;
-            $form->model()->vip_level = VipLevel::$defaultLevel;
-        });
-
+        $form->number("level",'等级')->rules(['required|max:6']);
+        $form->text('name', '等级描述')->rules(['required|max:32']);
+        $form->number('requirement_score', '等级达标分数')->rules(['required|min:1']);
         return $form;
     }
 
