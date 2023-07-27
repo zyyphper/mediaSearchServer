@@ -11,6 +11,8 @@ class VipLevelEquity extends BaseModel
     protected $primaryKey = "";
     protected $connection = "member";
 
+    protected $table = "vip_level_equity";
+
     protected $fillable = [
         'level_id',
         'equity_id',
