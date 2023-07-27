@@ -6,7 +6,7 @@ namespace App\Services\Vip;
 
 use App\Helpers\Tools;
 use App\Libraries\Base\BaseService;
-use App\Models\Vip\VipLevelEquity;
+use App\Models\Vip\VipPlatformEquity;
 
 class VipPlatformEquityService extends BaseService
 {
@@ -18,7 +18,7 @@ class VipPlatformEquityService extends BaseService
      */
     public function getEquityById($equity,$unit)
     {
-        $data = VipLevelEquity::where('equity_id',$equity)
+        $data = VipPlatformEquity::where('equity_id',$equity)
             ->where('platform_id',$this->platformId)
             ->select('total_num','total_unit')
             ->first();
