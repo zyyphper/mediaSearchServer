@@ -30,8 +30,8 @@ class BaseDict
     public function __construct($model,$type)
     {
         $this->model = app($model);
-        $this->data = $this->model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('code','name');
-        $this->desc = $this->model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('desc','code');
+        $this->data = $this->model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('code','name')->toArray();
+        $this->desc = $this->model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('desc','code')->toArray();
     }
 
 
