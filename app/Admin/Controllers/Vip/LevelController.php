@@ -48,14 +48,14 @@ class LevelController extends BaseAdminController
 
 
         $grid->column('level', 'LEVEL');
-        $grid->column('name','会员等级')->expand(function ($model) {
-            $equityData = [];
-            foreach ($model->equities()->get() as $equity) {
-                $unitDict = VipDict::find($equity->pivot->unit);
-                $equityData = [$equity->id,$equity->name,$equity->pivot->num.$unitDict->desc];
-            }
-            return new Table(['ID', '权益','数量'], $equityData);
-        });
+//        $grid->column('name','会员等级')->expand(function ($model) {
+//            $equityData = [];
+//            foreach ($model->equities()->get() as $equity) {
+//                $unitDict = VipDict::find($equity->pivot->unit);
+//                $equityData = [$equity->id,$equity->name,$equity->pivot->num.$unitDict->desc];
+//            }
+//            return new Table(['ID', '权益','数量'], $equityData);
+//        });
         $grid->column('requirement_score','达标分数');
         $grid->column('created_at', '创建时间');
 
