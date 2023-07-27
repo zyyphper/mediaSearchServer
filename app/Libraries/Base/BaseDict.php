@@ -15,7 +15,7 @@ class BaseDict
      * 字典模型
      * @var
      */
-    protected static string $model = BaseModel::class;
+    protected string $model = BaseModel::class;
     /**
      * 字典数据
      * @var array
@@ -29,12 +29,12 @@ class BaseDict
 
     private function __construct($type)
     {
-        $model = app(self::$model);
+        $model = app($this->model);
         var_dump($model);
-        $model = new self::$model();
+        $model = new $this->model();
         var_dump($model);die;
-        $this->data = self::$model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('code','name');
-        $this->desc = self::$model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('desc','code');
+        $this->data = $this->model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('code','name');
+        $this->desc = $this->model->where('type',$type)->where('is_show',BaseDict::SHOW)->pluck('desc','code');
     }
 
     private function __clone()
