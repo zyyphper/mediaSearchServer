@@ -8,6 +8,7 @@ namespace App\Libraries\Base;
 
 use App\Services\Rpc\Method\Rpc;
 use App\Services\Rpc\Method\RpcInterface;
+use Encore\Admin\Facades\Admin;
 use function PHPUnit\Framework\isNull;
 
 
@@ -57,6 +58,8 @@ class BaseService
         $this->autoSetModel();
         // 自动初始化函数调用
         method_exists($this, '_init') && call_user_func(array($this, '_init'));
+        //自动初始化平台ID
+        $this->setPlatform(Admin::user()->platform_id);
     }
 
     public function setPlatform(int $id)
