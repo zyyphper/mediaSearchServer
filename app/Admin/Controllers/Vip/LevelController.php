@@ -77,8 +77,10 @@ class LevelController extends BaseAdminController
             $form->number('requirement_score', '等级达标分数')->rules(['required|min:1']);
         })->tab('等级权益',function (Form $form) {
             $form->hasMany('levelEquities','权益',function (Form\NestedForm $form) {
-               $form->radio('equity_id','权益')->options(VipEquity::all()->pluck('name','id'))
-                   ->when(VipEquity::SPACE_CAPACITY,function (Form $form) {
+               $form->radio('equity_id','权益')->options(
+                   [1=>'空间存储',2=>'文件检索',3=>'类型转换']
+//                   VipEquity::all()->pluck('name','id')
+               )->when(VipEquity::SPACE_CAPACITY,function (Form $form) {
                         $form->number('num','数值');
                         $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::SPACE_CAPACITY)->pluck());
                    })->when(VipEquity::FILE_SEARCH,function (Form $form) {
