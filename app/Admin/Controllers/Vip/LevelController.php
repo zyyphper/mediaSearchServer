@@ -80,15 +80,15 @@ class LevelController extends BaseAdminController
                $form->radio('equity_id','权益')->options(
                    [1=>'空间存储',2=>'文件检索',3=>'类型转换']
 //                   VipEquity::all()->pluck('name','id')
-               )->when(VipEquity::SPACE_CAPACITY,function (Form $form) {
+               )->when(1,function (Form $form) {
                         $form->number('num','数值');
-                        $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::SPACE_CAPACITY)->pluck());
+//                        $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::SPACE_CAPACITY)->pluck());
                    })->when(VipEquity::FILE_SEARCH,function (Form $form) {
                        $form->number('num','数值');
-                       $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::FILE_SEARCH)->pluck());
+//                       $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::FILE_SEARCH)->pluck());
                    })->when(VipEquity::TYPE_CONVERT,function (Form $form) {
                        $form->number('num','数值');
-                       $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::TYPE_CONVERT)->pluck());
+//                       $form->radio('unit','单位')->options(EquityUnit::load(EquityUnit::TYPE_CONVERT)->pluck());
                    });
             });
         });
