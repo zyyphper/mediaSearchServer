@@ -6,7 +6,7 @@
 namespace App\Libraries\Base;
 
 use App\Helpers\Tools;
-use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Http\Controllers\AdminController;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Response;
 
