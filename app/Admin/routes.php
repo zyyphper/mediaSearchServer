@@ -1,5 +1,7 @@
 <?php
 
+
+use Encore\Admin\Facades\Admin;
 use Illuminate\Routing\Router;
 
 Admin::routes();
@@ -13,13 +15,13 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
 
-    $router->group(['prefix' => 'auth','namespace' => 'Admin'], function () use ($router) {
-        $router->resource('platforms', 'PlatformController');
-        $router->resource('users', 'PlatformUserController');
-        $router->resource('roles', 'PlatformRoleController');
-        $router->resource('menu', 'PlatformMenuController');
-        $router->resource('logs', 'PlatformLogController');
-    });
+//    $router->group(['prefix' => 'auth','namespace' => 'Admin'], function () use ($router) {
+//        $router->resource('platforms', 'PlatformController');
+//        $router->resource('users', 'PlatformUserController');
+//        $router->resource('roles', 'PlatformRoleController');
+//        $router->resource('menu', 'PlatformMenuController');
+//        $router->resource('logs', 'PlatformLogController');
+//    });
 
     // 媒资信息模块
     $router->group(['prefix' => 'material','namespace' => 'Material'], function () use ($router) {
